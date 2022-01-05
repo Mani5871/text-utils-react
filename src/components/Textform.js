@@ -1,20 +1,30 @@
 import React, { useState } from 'react'
 import './components.css'
+import showAlert from './../App'
+
 
 export default function Textform(props) {
 
     const [text, setText] = useState("");
+    const [myStyle, setStyle] = useState({
+        color: "black",
+        backgroundColor: "white"
+    });
+
 
     const clearText = () => {
         setText("");
+        props.showAlert("Text cleared", "warning");
     }
 
     const uppercase = () => {
         setText(text.toUpperCase());
+        props.showAlert("Text converted to uppercase", "success");
     }
 
     const lowercase = () => {
         setText(text.toLowerCase());
+        props.showAlert("Text converted to lowercase", "success");
     }
 
     const capitalize = () => {
@@ -42,13 +52,13 @@ export default function Textform(props) {
             <div className="container my-3">
                 <h1>{props.heading}</h1>
                 <div className="mb-3">
-                    <textarea className="form-control" onChange = {onChangeHandler} value = {text} id="myBox" rows="8"></textarea>
-                    <button className="btn btn-primary my-4"  onClick={uppercase}>Upper Case</button>
-                    <button className="btn btn-secondary my-4 mx-2"  onClick={lowercase}>Lower Case</button>
-                    <button className="btn btn-success my-4 "  onClick={clearText}>Clear Text</button>
-                    <button className="btn btn-info my-4 mx-2"  onClick={capitalize}>Capitalize</button>
-                    <button className="btn btn-warning my-4"  onClick={sortHandler}>Sort</button>
-                    <button className="btn btn-danger my-4 mx-2"  onClick={reverseHandler}>Reverse</button>
+                    <textarea style={{ backgroundColor: props.mode === "dark" ? "black" : "white", color: props.mode === "dark" ? "white" : "black" }} className="form-control" onChange={onChangeHandler} value={text} id="myBox" rows="8"></textarea>
+                    <button className="btn btn-primary my-4" onClick={uppercase}>Upper Case</button>
+                    <button className="btn btn-secondary my-4 mx-2" onClick={lowercase}>Lower Case</button>
+                    <button className="btn btn-success my-4 " onClick={clearText}>Clear Text</button>
+                    <button className="btn btn-info my-4 mx-2" onClick={capitalize}>Capitalize</button>
+                    <button className="btn btn-warning my-4" onClick={sortHandler}>Sort</button>
+                    <button className="btn btn-danger my-4 mx-2" onClick={reverseHandler}>Reverse</button>
                 </div>
             </div>
 
@@ -58,7 +68,7 @@ export default function Textform(props) {
                 <p>{text.length} characters</p>
                 <p>{text.split(" ").length * 0.008} Minutes to read the text</p>
                 <h2>Preview</h2>
-                <p>{text}</p>
+                <p>{text.length > 0 ? text : "Enter something in above text box"}</p>
             </div>
         </>
     )
