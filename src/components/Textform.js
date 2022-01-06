@@ -1,16 +1,10 @@
 import React, { useState } from 'react'
 import './components.css'
-import showAlert from './../App'
 
 
 export default function Textform(props) {
 
     const [text, setText] = useState("");
-    const [myStyle, setStyle] = useState({
-        color: "black",
-        backgroundColor: "white"
-    });
-
 
     const clearText = () => {
         setText("");
@@ -18,13 +12,27 @@ export default function Textform(props) {
     }
 
     const uppercase = () => {
-        setText(text.toUpperCase());
-        props.showAlert("Text converted to uppercase", "success");
+        if(text.length > 0)
+        {
+            setText(text.toUpperCase());
+            props.showAlert("Text converted to uppercase", "success");
+        }
+        else
+        {
+            props.showAlert("Text is empty", "danger");
+        }
     }
 
     const lowercase = () => {
-        setText(text.toLowerCase());
-        props.showAlert("Text converted to lowercase", "success");
+        if(text.length > 0)
+        {
+            setText(text.toLowerCase());
+            props.showAlert("Text converted to lowercase", "success");
+        }
+        else
+        {
+            props.showAlert("Text is empty", "danger");
+        }
     }
 
     const capitalize = () => {
@@ -64,7 +72,7 @@ export default function Textform(props) {
 
             <div className="container my-3">
                 <h1>Your Text Summary</h1>
-                <p>{text.split(" ").length} words</p>
+                <p>{text.split(" ").filter((element) => {return element.length !== 0}).length} words</p>
                 <p>{text.length} characters</p>
                 <p>{text.split(" ").length * 0.008} Minutes to read the text</p>
                 <h2>Preview</h2>
